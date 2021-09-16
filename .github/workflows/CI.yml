@@ -22,10 +22,10 @@ jobs:
        run: |
          gem install bundler
          bundle install --jobs 4 --retry 3
-     - name: Run rubocop
-       run: bundle exec rake lint
      - name: Run tests
        run: bundle exec rake test   
+     - name: Run rubocop
+       run: bundle exec rake lint
      - name: Upload coverage results
        uses: actions/upload-artifact@v1
        with:
