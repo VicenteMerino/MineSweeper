@@ -1,0 +1,32 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+     - uses: actions/checkout@v2
+     - name: Set up Ruby 3.0
+       uses: actions/setup-ruby@v1
+       with:
+        ruby-version: 3.0.x
+     - name: Build and test with Rake
+       run: |
+         gem install bundler
+         bundle install --jobs 4 --retry 3
+         bundle exec rake
+         
+         
+     - name: Upload coverage results
+       uses: actions/upload-artifact@v1
+       with:
+        name: coverage-report
+        path: coverage
