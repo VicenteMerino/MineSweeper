@@ -8,7 +8,7 @@ class BoardTest < Test::Unit::TestCase
   def test_winner_horizontal
     board = Board.new([
       ['*','*','*','*','*'],
-      ['*','X','X','X','*'],
+      ['*','asd','X','X','*'],
       ['*','_','0','_','*'],
       ['*','_','0','_','*'],
       ['*','*','*','*','*']
