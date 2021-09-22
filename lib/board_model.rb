@@ -4,6 +4,8 @@ require_relative './cell_model'
 
 # model board
 class Board
+  attr_accessor :size, :bombs, :board
+
   def initialize
     @size = 9
     @bombs = 10
@@ -13,7 +15,7 @@ class Board
   def generate_random_board
     random_board = Array.new(@size) { Array.new(@size) }
     generated_bombs = []
-    while generated_bombs.length < @size
+    while generated_bombs.length <= @size
       new_bomb = [rand(9), rand(9)]
       unless generated_bombs.include?(new_bomb)
         generated_bombs << new_bomb
@@ -24,8 +26,8 @@ class Board
   end
 
   def assign_board_cells(board)
-    (0..@size - 1).each do |row|
-      (0..@size - 1).each do |col|
+    (0..board.length - 1).each do |row|
+      (0..board[0].length - 1).each do |col|
         if board[row][col].nil?
           cell_value = neighbors_bombs(board, row, col)
           board[row][col] = Cell.new(cell_value, false)
