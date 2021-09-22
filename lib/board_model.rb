@@ -4,7 +4,7 @@ require_relative './cell_model'
 
 # model board
 class Board
-  attr_accessor :size, :bombs, :board
+  attr_reader :size, :bombs, :board
 
   def initialize
     @size = 9
