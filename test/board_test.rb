@@ -77,4 +77,13 @@ class BoardTest < Test::Unit::TestCase
     @board.undercover_cell(4, 4)
     assert_equal(@board.equal(board_visible), true)
   end
+
+  def test_board
+    values = [[[0, true], [0, true], [0, true]],
+              [[0, true], [0, true], [1, true]],
+              [[1, true], [1, true], [2, true]]]
+    board_test = Board.new(board_values: values)
+    assert_equal(board_test.board.length, values.length)
+    assert_equal(board_test.board[0].length, values[0].length)
+  end
 end

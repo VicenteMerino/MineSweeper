@@ -7,7 +7,7 @@ class Board
   attr_reader :size, :bombs, :board
 
   def initialize(board_values: [])
-    @size = board_values.length.zero? ? 9 : 5
+    @size = board_values.length.zero? ? 9 : board_values.length
     @bombs = 10
     @board = board_values.length.zero? ? generate_random_board : test_board(board_values)
   end
@@ -48,7 +48,7 @@ class Board
   end
 
   def test_board(board_values)
-    board = Array.new(5) { Array.new(@size) }
+    board = Array.new(@size) { Array.new(@size) }
     board_values.each_with_index do |row, i|
       row.each_with_index { |value, j| board[i][j] = Cell.new(value[0], value[1]) }
     end
