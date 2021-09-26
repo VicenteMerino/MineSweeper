@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
+require_relative './observer/observable'
 require_relative './cell_model'
 
 # model board
-class Board
+class Board < Observable
   attr_reader :size, :bombs, :board
 
   def initialize
+    super()
     @size = 9
     @bombs = 10
     @board = generate_random_board
