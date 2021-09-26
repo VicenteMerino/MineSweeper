@@ -8,4 +8,8 @@ class Cell
     @value = value
     @is_visible = is_visible
   end
+
+  def equal(other_cell)
+    other_cell.value == @value && other_cell.is_visible == @is_visible
+  end
 end
