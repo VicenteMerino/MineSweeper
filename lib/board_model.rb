@@ -38,11 +38,12 @@ class Board
   end
 
   def neighbors_bombs(board, row, col)
-    movements = [[-1, -1], [-1, 0], [1, 0], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]]
-    movements.select! { |y, x| (y + row).between?(0, @size - 1) && (x + col).between?(0, @size - 1) }
     bombs_count = 0
-    movements.each do |movement|
-      bombs_count += 1 if board[row + movement[0]][col + movement[1]]
+    (row - 1..row + 1).each do |neighbor_row|
+      (col - 1..col + 1).each do |neighbor_col|
+        bombs_count += 1 if in_tablero(row, col, neighbor_row, neighbor_col,
+                                       board.length) && board[neighbor_row][neighbor_col]&.value == 9
+      end
     end
     bombs_count
   end
@@ -74,8 +75,8 @@ class Board
     end
   end
 
-  def in_tablero(row, col, neighbor_row, neighbor_col)
-    (neighbor_row.between?(0, @size - 1) && neighbor_col.between?(0, @size - 1) &&
+  def in_tablero(row, col, neighbor_row, neighbor_col, size = @size)
+    (neighbor_row.between?(0, size - 1) && neighbor_col.between?(0, size - 1) &&
       !(neighbor_row == row && neighbor_col == col))
   end
 
