@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 require_relative './cell_model'
+require_relative './board_model'
+require_relative './board_view'
+require 'colorize'
 
-cell = Cell.new(1, false)
-puts cell.value
+board = Board.new
+
+view = BoardView.new
+
+view.print_board(board)
