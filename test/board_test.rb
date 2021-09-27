@@ -6,11 +6,15 @@ require 'test/unit'
 
 class BoardTest < Test::Unit::TestCase
   def setup
-    @board = Board.new(board_values: [[[0, false], [0, false], [0, false], [1, false], [9, false]],
-                                      [[0, false], [0, false], [1, false], [2, false], [2, false]],
-                                      [[1, false], [1, false], [2, false], [9, false], [1, false]],
-                                      [[1, false], [9, false], [3, false], [2, false], [2, false]],
-                                      [[1, false], [1, false], [2, false], [9, false], [1, true]]])
+    @board_values = [[[0, false], [0, false], [0, false], [1, false], [9, false]],
+                     [[0, false], [0, false], [1, false], [2, false], [2, false]],
+                     [[1, false], [1, false], [2, false], [9, false], [1, false]],
+                     [[1, false], [9, false], [3, false], [2, false], [2, false]],
+                     [[1, false], [1, false], [2, false], [9, false], [1, true]]]
+    @board = Board.new(board_values: @board_values)
+    @bomb_board = [[nil, nil, nil, nil, Cell.new(9, false)], [nil, nil, nil, nil, nil],
+                   [nil, nil, nil, Cell.new(9, false), nil], [nil, Cell.new(9, false), nil, nil, nil],
+                   [nil, nil, nil, Cell.new(9, false), nil]]
   end
 
   def test_random_board_size
@@ -78,12 +82,21 @@ class BoardTest < Test::Unit::TestCase
     assert_equal(@board.equal(board_visible), true)
   end
 
-  def test_board
+  def test_board_length
     values = [[[0, true], [0, true], [0, true]],
               [[0, true], [0, true], [1, true]],
               [[1, true], [1, true], [2, true]]]
     board_test = Board.new(board_values: values)
     assert_equal(board_test.board.length, values.length)
     assert_equal(board_test.board[0].length, values[0].length)
+  end
+
+  def test_board_values
+    filled_board = @board.assign_board_cells(@bomb_board)
+    (0..filled_board.length - 1).each do |row_index|
+      (0..filled_board[0].length - 1).each do |col_index|
+        assert_equal(filled_board[row_index][col_index]&.value, @board.board[row_index][col_index].value)
+      end
+    end
   end
 end
