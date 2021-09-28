@@ -99,4 +99,12 @@ class BoardTest < Test::Unit::TestCase
       end
     end
   end
+
+  def test_board_test_bombs
+    values = [[[0, true], [9, true], [0, true]],
+              [[9, false], [0, true], [1, true]],
+              [[1, true], [1, true], [2, true]]]
+    board_test = Board.new(board_values: values)
+    assert_equal(board_test.bombs, 2)
+  end
 end

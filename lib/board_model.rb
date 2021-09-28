@@ -10,8 +10,18 @@ class Board < Observable
   def initialize(board_values: [])
     super()
     @size = board_values.length.zero? ? 9 : board_values.length
-    @bombs = 10
+    @bombs = board_values.length.zero? ? 10 : calculate_bombs(board_values)
     @board = board_values.length.zero? ? generate_random_board : test_board(board_values)
+  end
+
+  def calculate_bombs(board_values)
+    bombs = 0
+    (0..@size - 1).each do |row|
+      (0..@size - 1).each do |col|
+        bombs += 1 if board_values[row][col][0] == 9
+      end
+    end
+    bombs
   end
 
   def generate_random_board
