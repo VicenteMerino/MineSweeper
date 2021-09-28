@@ -100,4 +100,16 @@ class Board < Observable
     end
     true
   end
+
+  def check_victory
+    undercovered_cells = 0
+    (0..@size - 1).each do |row|
+      (0..@size - 1).each do |col|
+        undercovered_cells += 1 if @board[row][col].is_visible
+      end
+    end
+    return true if undercovered_cells == (@size * @size) - @bombs
+
+    false
+  end
 end

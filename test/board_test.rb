@@ -107,4 +107,22 @@ class BoardTest < Test::Unit::TestCase
     board_test = Board.new(board_values: values)
     assert_equal(board_test.bombs, 2)
   end
+
+  def test_victory_true
+    board_win = Board.new(board_values: [[[0, true], [0, true], [0, true], [1, true], [9, false]],
+                                         [[0, true], [0, true], [1, true], [2, true], [2, true]],
+                                         [[1, true], [1, true], [2, true], [9, false], [1, true]],
+                                         [[1, true], [9, false], [3, true], [2, true], [2, true]],
+                                         [[1, true], [1, true], [2, true], [9, false], [1, true]]])
+    assert_true(board_win.check_victory)
+  end
+
+  def test_victory_false
+    board_win = Board.new(board_values: [[[0, true], [0, true], [0, true], [1, true], [9, false]],
+                                         [[0, true], [0, true], [1, true], [2, true], [2, true]],
+                                         [[1, false], [1, true], [2, true], [9, false], [1, true]],
+                                         [[1, true], [9, false], [3, true], [2, true], [2, true]],
+                                         [[1, true], [1, true], [2, true], [9, false], [1, true]]])
+    assert_false(board_win.check_victory)
+  end
 end
