@@ -15,5 +15,4 @@ view = BoardView.new
 #view.print_board(board)
 #
 rungame(board, view)
-#
-#view.game_over
+#board.surrender(board)

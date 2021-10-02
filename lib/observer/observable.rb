@@ -13,4 +13,6 @@ class Observable
   def notify_all
     @observers.each { |observer| observer.update(self) }
   end
+
+  attr_reader :observers
 end
