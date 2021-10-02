@@ -35,7 +35,7 @@ class BoardView < Observer
   def print_board(board_model)
     header = "  #{(0..board_model.size - 1).to_a.join(' ')}\n"
     board = board_model.board.each_with_index.map do |row, index|
-      "#{index + 1} #{row.map { |cell| apply_format(cell) }.join(' ')}"
+      "#{index} #{row.map { |cell| apply_format(cell) }.join(' ')}"
     end
     puts(header + board.join("\n"))
   end
