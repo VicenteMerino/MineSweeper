@@ -113,7 +113,7 @@ class Board < Observable
     false
   end
 
-  def surrender
+  def surrender(board)
     (0..@size - 1).each do |row|
       (0..@size - 1).each do |col|
         board.undercover_cell(row, col)

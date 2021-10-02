@@ -10,4 +10,5 @@ board = Board.new
 view = BoardView.new
 
 view.print_board(board)
-view.game_over
+board.surrender(board)
+view.print_board(board)
