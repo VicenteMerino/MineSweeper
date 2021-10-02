@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 INSTRUCTIONS = "Ingresa las coordenadas de la celda a descubrir
 El formato es separados por coma Ejemplo: 2,1
 Para terminar ingresa 'e'"
@@ -26,10 +27,7 @@ class BoardController
     return false if input.nil? || input.empty?
     return false unless input.match('^[0-9]$')
     return false if input.to_i > 8
-    return true
+
+    true
   end
 end
-
-
-a = BoardController.new
-a.request_user_input
