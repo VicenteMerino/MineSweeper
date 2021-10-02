@@ -3,16 +3,13 @@
 require_relative './cell_model'
 require_relative './board_model'
 require_relative './board_view'
-#
-require_relative './game_flow'
-#
+require_relative './board_controller'
 require 'colorize'
 
-board = Board.new
+model = Board.new
 
 view = BoardView.new
 
-#view.print_board(board)
-#
-rungame(board, view)
-#board.surrender(board)
+controller = BoardController.new(model, view)
+controller.print_board
+controller.process_input

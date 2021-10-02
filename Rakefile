@@ -11,7 +11,7 @@ RuboCop::RakeTask.new(:lint) do |task|
 end
 
 Rake::TestTask.new(:test) do |t|
-  t.libs = ["lib"]
+  t.libs = ['lib']
   t.warning = true
   t.test_files = FileList['test/**/*_test.rb']
 end
