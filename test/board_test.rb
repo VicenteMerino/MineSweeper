@@ -81,4 +81,18 @@ class BoardTest < Test::Unit::TestCase
                                          [[1, true], [1, true], [2, true], [9, false], [1, true]]])
     assert_false(board_win.check_victory)
   end
+
+  def test_not_lose
+    row = 0
+    col = 0
+    status = @board.lose(row, col)
+    assert_equal(status, false)
+  end
+
+  def test_lose
+    row = 3
+    col = 1
+    status = @board.lose(row, col)
+    assert_equal(status, true)
+  end
 end
