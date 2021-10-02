@@ -6,8 +6,6 @@ INSTRUCTIONS = "Ingresa las coordenadas de la celda a descubrir
 El formato es separados por coma Ejemplo: 2,1 (fila, columna)
 Para terminar ingresa 'e'".freeze
 
-ERROR_INPUT = "Formato de coordenada incorrecto. ej: 2,1 (fila, columna). 'e' para rendirse.".freeze
-
 COLORS = %i[blue green yellow cyan light_cyan magenta black light_black white].freeze
 
 # board view
@@ -45,10 +43,6 @@ class BoardView < Observer
   def request_user_input
     puts INSTRUCTIONS
     gets.chomp
-  end
-
-  def print_error
-    puts ERROR_INPUT
   end
 
   def congratulate(board_model)

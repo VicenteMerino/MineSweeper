@@ -93,31 +93,23 @@ class Board < Observable
   end
 
   def equal(other_board)
-    (0..@size - 1).each do |row|
-      (0..@size - 1).each do |col|
-        return false unless (@board[row][col]).equal(other_board.board[row][col])
-      end
+    @board.each_with_index do |row_elem, row|
+      row_elem.each { |cell, col| return false unless cell.equal(other_board[row][col]) }
     end
     true
   end
 
   def check_victory
     undercovered_cells = 0
-    (0..@size - 1).each do |row|
-      (0..@size - 1).each do |col|
-        undercovered_cells += 1 if @board[row][col].is_visible
-      end
+    @board.each do |row_elem|
+      row_elem.each { |cell| undercovered_cells += 1 if cell.is_visible }
     end
-    return true if undercovered_cells == (@size * @size) - @bombs
-
-    false
+    undercovered_cells == (@size * @size) - @bombs
   end
 
   def surrender
-    (0..@size - 1).each do |row|
-      (0..@size - 1).each do |col|
-        undercover_cell(row, col)
-      end
+    @board.each_with_index do |row_elem, row|
+      row_elem.each_with_index { |_cell, col| undercover_cell(row, col) }
     end
   end
 

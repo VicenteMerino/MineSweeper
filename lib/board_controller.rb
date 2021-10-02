@@ -33,7 +33,6 @@ class BoardController
     elsif correct?(row) & correct?(col)
       select(row.to_i, col.to_i)
     else
-      @view.print_error
       process_input
     end
   end
