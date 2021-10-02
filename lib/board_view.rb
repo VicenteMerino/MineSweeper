@@ -39,6 +39,7 @@ class BoardView < Observer
     puts(header + board.join("\n"))
     if $lose == true
       game_over
+      exit
     end
   end
 
