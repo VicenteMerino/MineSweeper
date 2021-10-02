@@ -2,17 +2,19 @@
 
 require_relative './observer/observer'
 
+$lose = false
 # board view
 class BoardView < Observer
   COLORS = %i[blue green red magenta black light_black yellow cyan light_cyan].freeze
+
 
   def clean
     system('clear') || system('cls')
   end
 
   def update(board_model)
-    clean
-    printBoard(board_model)
+    #clean
+    print_board(board_model)
   end
 
   def apply_format(cell)
@@ -21,6 +23,7 @@ class BoardView < Observer
       if cell.value != 9
         cell.value.to_s.colorize(color: COLORS[cell.value])
       else
+        $lose = true
         '*'.colorize(:red)
       end
     else
@@ -34,10 +37,14 @@ class BoardView < Observer
       "#{index + 1} #{row.map { |cell| apply_format(cell) }.join(' ')}"
     end
     puts(header + board.join("\n"))
+    if $lose == true
+      game_over
+      exit
+    end
   end
 
   def congratulate
-    clean
+    #clean
     puts <<-BANNER
     ██╗  ██╗ █████╗ ███████╗     ██████╗  █████╗ ███╗   ██╗ █████╗ ██████╗  ██████╗ ██╗
     ██║  ██║██╔══██╗╚══███╔╝    ██╔════╝ ██╔══██╗████╗  ██║██╔══██╗██╔══██╗██╔═══██╗██║
@@ -50,7 +57,7 @@ class BoardView < Observer
   end
 
   def game_over
-    clean
+    #clean
     puts <<-BANNER
     ▄████  ▄▄▄       ███▄ ▄███▓▓█████     ▒█████   ██▒   █▓▓█████  ██▀███
     ██▒ ▀█▒▒████▄    ▓██▒▀█▀ ██▒▓█   ▀    ▒██▒  ██▒▓██░   █▒▓█   ▀ ▓██ ▒ ██▒
