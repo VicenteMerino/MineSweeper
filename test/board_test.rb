@@ -25,7 +25,7 @@ class BoardTest < Test::Unit::TestCase
                     [[1, false], [1, false], [2, false], [9, false], [1, true]]]
     board_with_neighbor = Board.new(board_values: board_values, bombs: 4)
     @board.undercover_cell(0, 0)
-    assert_equal(@board.equal(board_with_neighbor), true)
+    assert(@board.equal(board_with_neighbor))
   end
 
   def test_select_without_neighbor
@@ -36,7 +36,7 @@ class BoardTest < Test::Unit::TestCase
                     [[1, false], [1, false], [2, false], [9, true], [1, true]]]
     board_without_neighbor = Board.new(board_values: board_values, bombs: 4)
     @board.undercover_cell(4, 3)
-    assert_equal(@board.equal(board_without_neighbor), true)
+    assert(@board.equal(board_without_neighbor))
   end
 
   def test_select_visible
@@ -47,7 +47,7 @@ class BoardTest < Test::Unit::TestCase
                     [[1, false], [1, false], [2, false], [9, false], [1, true]]]
     board_visible = Board.new(board_values: board_values, bombs: 9)
     @board.undercover_cell(4, 4)
-    assert_equal(@board.equal(board_visible), true)
+    assert(@board.equal(board_visible))
   end
 
   def test_board_length
@@ -66,7 +66,7 @@ class BoardTest < Test::Unit::TestCase
                     [[1, true], [9, false], [3, true], [2, true], [2, true]],
                     [[1, true], [1, true], [2, true], [9, false], [1, true]]]
     board_win = Board.new(board_values: board_values, bombs: 4)
-    assert_true(board_win.check_victory)
+    assert(board_win.check_victory)
   end
 
   def test_victory_false
@@ -80,16 +80,16 @@ class BoardTest < Test::Unit::TestCase
   end
 
   def test_not_lose
-    row = 0
-    col = 0
-    status = @board.lose(row, col)
-    assert_equal(status, false)
+    assert_false(@board.check_lose)
   end
 
   def test_lose
-    row = 3
-    col = 1
-    status = @board.lose(row, col)
-    assert_equal(status, true)
+    board_values = [[[0, true], [0, true], [0, true], [1, true], [9, true]],
+                    [[0, true], [0, true], [1, true], [2, true], [2, true]],
+                    [[1, false], [1, true], [2, true], [9, false], [1, true]],
+                    [[1, true], [9, false], [3, true], [2, true], [2, true]],
+                    [[1, true], [1, true], [2, true], [9, false], [1, true]]]
+    board_lost = Board.new(board_values: board_values, bombs: 4)
+    assert(board_lost.check_lose)
   end
 end

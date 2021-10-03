@@ -3,6 +3,7 @@
 require_relative 'test_helper'
 require_relative '../lib/observer/observable'
 require_relative '../lib/observer/observer'
+require_relative '../lib/board_view'
 require_relative 'mock_observer'
 require 'test/unit'
 
@@ -20,8 +21,11 @@ class ObserverTest < Test::Unit::TestCase
 
   def test_observer_with_update
     mock_observer = MockObserver.new
-    @observable.add_observer(mock_observer)
-    @observable.notify_all
+    view = BoardView.new
+    board = Board.new
+    board.add_observer(mock_observer)
+    board.add_observer(view)
+    board.notify_all
     assert_equal(true, mock_observer.is_updated)
   end
 

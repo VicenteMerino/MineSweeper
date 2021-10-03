@@ -83,7 +83,7 @@ class Board < Observable
 
   def in_board(row, col, neighbor_row, neighbor_col, size = @size)
     (neighbor_row.between?(0, size - 1) && neighbor_col.between?(0, size - 1) &&
-      !(neighbor_row == row && neighbor_col == col))
+     !(neighbor_row == row && neighbor_col == col))
   end
 
   def equal(other_board)
@@ -98,7 +98,7 @@ class Board < Observable
   def check_victory
     undercovered_cells = 0
     @board.each do |row_elem|
-      row_elem.each { |cell| undercovered_cells += 1 if cell.is_visible }
+      row_elem.each { |cell| undercovered_cells += 1 if cell.is_visible && cell.value != 9 }
     end
     return true if undercovered_cells == (@size * @size) - @bombs
 
@@ -111,7 +111,13 @@ class Board < Observable
     end
   end
 
-  def lose(row, col)
-    @board[row][col].value == 9
+  def check_lose
+    lost = false
+    @board.each do |row_elem|
+      row_elem.each do |cell|
+        lost = true if cell.is_visible && cell.value == 9
+      end
+    end
+    lost
   end
 end
