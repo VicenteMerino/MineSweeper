@@ -7,6 +7,7 @@ require_relative '../lib/board_view'
 require_relative 'mock_observer'
 require 'test/unit'
 require 'stringio'
+require 'colorize'
 
 class ControllerTest < Test::Unit::TestCase
   def setup
@@ -17,9 +18,7 @@ class ControllerTest < Test::Unit::TestCase
                      [[1, false], [1, false], [2, false], [9, false], [1, true]]]
     @board_view = BoardView.new
     @board = Board.new(board_values: @board_values, bombs: 4)
-    @bomb_board = [[nil, nil, nil, nil, Cell.new(9, false)], [nil, nil, nil, nil, nil],
-                   [nil, nil, nil, Cell.new(9, false), nil], [nil, Cell.new(9, false), nil, nil, nil],
-                   [nil, nil, nil, Cell.new(9, false), nil]]
+
     @controller = BoardController.new(@board, @board_view )
   end
 
@@ -32,6 +31,9 @@ class ControllerTest < Test::Unit::TestCase
                      [[1, false], [1, false], [2, false], [9, false], [1, true]]]
     board_after_select = Board.new(board_values: board_values, bombs: 4)
     @controller.start_game
+    io = StringIO.new
+    io.puts "2,0"
+    io.string
     @controller.select(2,0)
     assert_equal(@board.equal(board_after_select), true)
 
