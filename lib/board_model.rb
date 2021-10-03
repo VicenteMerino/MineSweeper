@@ -2,26 +2,15 @@
 
 require_relative './observer/observable'
 require_relative './cell_model'
-
 # model board
 class Board < Observable
   attr_reader :size, :bombs, :board
 
-  def initialize(board_values: [])
+  def initialize(board_values: [], bombs: 10)
     super()
     @size = board_values.length.zero? ? 9 : board_values.length
-    @bombs = board_values.length.zero? ? 10 : calculate_bombs(board_values)
+    @bombs = bombs
     @board = board_values.length.zero? ? generate_random_board : test_board(board_values)
-  end
-
-  def calculate_bombs(board_values)
-    bombs = 0
-    (0..@size - 1).each do |row|
-      (0..@size - 1).each do |col|
-        bombs += 1 if board_values[row][col][0] == 9
-      end
-    end
-    bombs
   end
 
   def generate_random_board
@@ -53,8 +42,8 @@ class Board < Observable
     bombs_count = 0
     (row - 1..row + 1).each do |neighbor_row|
       (col - 1..col + 1).each do |neighbor_col|
-        bombs_count += 1 if in_tablero(row, col, neighbor_row, neighbor_col,
-                                       board.length) && board[neighbor_row][neighbor_col]&.value == 9
+        bombs_count += 1 if in_board(row, col, neighbor_row, neighbor_col,
+                                     board.length) && board[neighbor_row][neighbor_col]&.value == 9
       end
     end
     bombs_count
@@ -68,7 +57,7 @@ class Board < Observable
     board
   end
 
-  def undercover_cell(row, col)
+  def _undercover_cell(row, col)
     cell = @board[row][col]
     return if cell.is_visible
 
@@ -78,16 +67,21 @@ class Board < Observable
     check_neighbors(row, col)
   end
 
+  def undercover_cell(row, col)
+    _undercover_cell(row, col)
+    notify_all
+  end
+
   def check_neighbors(row, col)
     (row - 1..row + 1).each do |neighbor_row|
       (col - 1..col + 1).each do |neighbor_col|
-        undercover_cell(neighbor_row, neighbor_col) if in_tablero(row, col, neighbor_row, neighbor_col) &&
+        undercover_cell(neighbor_row, neighbor_col) if in_board(row, col, neighbor_row, neighbor_col) &&
                                                        @board[neighbor_row][neighbor_col].value != 9
       end
     end
   end
 
-  def in_tablero(row, col, neighbor_row, neighbor_col, size = @size)
+  def in_board(row, col, neighbor_row, neighbor_col, size = @size)
     (neighbor_row.between?(0, size - 1) && neighbor_col.between?(0, size - 1) &&
       !(neighbor_row == row && neighbor_col == col))
   end

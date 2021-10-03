@@ -6,9 +6,7 @@ require_relative './board_controller'
 require 'colorize'
 
 model = Board.new
-
 view = BoardView.new
-
+model.add_observer(view)
 controller = BoardController.new(model, view)
-controller.print_board
-controller.process_input
+controller.start_game
