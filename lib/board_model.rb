@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 require_relative './observer/observable'
-require_relative './cell_model'
-
+require_relative './cell_model.rb'
 # model board
 class Board < Observable
   attr_reader :size, :bombs, :board
@@ -68,7 +67,7 @@ class Board < Observable
     board
   end
 
-  def undercover_cell(row, col)
+  def _undercover_cell(row, col)
     cell = @board[row][col]
     return if cell.is_visible
 
@@ -78,10 +77,15 @@ class Board < Observable
     check_neighbors(row, col)
   end
 
+  def undercover_cell(row, col)
+    _undercover_cell(row, col)
+    notify_all()
+  end
+
   def check_neighbors(row, col)
     (row - 1..row + 1).each do |neighbor_row|
       (col - 1..col + 1).each do |neighbor_col|
-        undercover_cell(neighbor_row, neighbor_col) if in_tablero(row, col, neighbor_row, neighbor_col) &&
+        _undercover_cell(neighbor_row, neighbor_col) if in_tablero(row, col, neighbor_row, neighbor_col) &&
                                                        @board[neighbor_row][neighbor_col].value != 9
       end
     end

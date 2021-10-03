@@ -9,7 +9,6 @@ class BoardController
 
   def select(row, col)
     @model.undercover_cell(row, col)
-    @view.update(@model)
     if @model.check_victory
       @view.congratulate(@model)
     elsif @model.lose(row, col)
@@ -17,11 +16,6 @@ class BoardController
     else
       process_input
     end
-  end
-
-  def print_board
-    @view.clean
-    @view.print_board(@model)
   end
 
   def process_input
@@ -35,6 +29,12 @@ class BoardController
     else
       process_input
     end
+  end
+
+  def start_game
+    @view.clean
+    @view.print_board(@model)
+    process_input
   end
 
   private
