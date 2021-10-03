@@ -10,7 +10,9 @@
                                                                                                   
 ```
 
-- Para jugar, primero se tiene que descargar el repositorio completo.
+- Para jugar, primero se tiene que descargar el repositorio completo, clonando el repositoro:
+  - `git clone git@github.com:VicenteMerino/ProyectoA-MineSweeper-Grupo6.git` para SSH.
+  - `git clone https://github.com/VicenteMerino/ProyectoA-MineSweeper-Grupo6.git` para HTTPS
 - Instalar dependencias con ejecutando `bundle install` en la consola desde la carpeta raíz del juego.
 - Para iniciar el juego, se debe ejecutar `ruby lib/main.rb` en la consola desde la carpeta raíz del juego.
 
