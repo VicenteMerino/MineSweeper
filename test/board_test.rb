@@ -81,4 +81,13 @@ class BoardTest < Test::Unit::TestCase
                                          [[1, true], [1, true], [2, true], [9, false], [1, true]]])
     assert_false(board_win.check_victory)
   end
+
+  def test_surrender
+    @board.surrender
+    @board.board.each do |row|
+      row.each do |cell|
+        assert_true(cell.is_visible)
+      end
+    end
+  end
 end
